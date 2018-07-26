@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Support</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+  <header>
+  	<div class="container">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Support</a>
+        </div>
+        <ul class="nav navbar-nav">
+        <li class="<%= 'active' if request.env['PATH_INFO'] == "/solutions" %>"><a href="/solutions">Справочник</a></li>
+        <% if user_signed_in? %>
+          <% if current_user.admin? %>
+            <%= render 'layouts/navbar' %>
+          <% else %>
+            <% if current_user.id = 1 %>
+              <%= render 'layouts/navbar' %>
+            <% end %>
+          <% end %>
+        <% end %>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li id="notice" class="next"><a href="#"><%= notice %></a></li>
+          <li style="padding-top: 16px;">
+          <% if user_signed_in? %>Привет,
+            <% if current_user.admin? %>Admin
+            <li class="pull-right"><%= link_to('', destroy_user_session_path, :method => :delete, :class => "glyphicon glyphicon-log-out") %></a></li>
+              <% else %>
+              <%= current_user.name %>
+              <li class="pull-right"><%= link_to('', destroy_user_session_path, :method => :delete, :class => "glyphicon glyphicon-log-out") %></a></li>
+              <% end %>
+              <% else %>
+              <li class="pull-right"><%= link_to('', new_user_session_path, :class => "glyphicon glyphicon-log-in")  %></a></li>
+              <% end %></li>
+        </ul>
+        <%= form_tag(solutions_path, method: :get, :class => 'form-inline my-2 my-lg-0', role: 'search') do %>
+          <%= text_field_tag :term, "", class: "form-control mr-sm-2" %>
+          <%= submit_tag 'Search', class: "fix-btn btn btn-outline-success my-2 my-sm-0"  %>
+        <% end %>
+
+</div>
+  </nav>
+    </div>
+   
+
+    </header>
+ 
+    <div id="body">
+         <%= yield %>
+    </div>
+ 
+    <footer>
+       <div class="container">
+        <hr />
+        <p class="text-center">Copyright © Pluton 2018. All rights reserved.</p>
+    </div>
+    </footer>
+  </body>
+</html>

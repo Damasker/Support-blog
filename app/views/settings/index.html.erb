@@ -1,0 +1,87 @@
+<div class="container">
+<div class="col-md-4">
+<h3>Разделы</h3>
+<table>
+<tr>
+    <th><h4>Имя раздела</h4></th>
+    <th colspan="2"></th>
+  </tr>
+<tbody>
+    <% @settings.each do |setting| %>
+      <tr>
+        <td><b><h4><%= setting.section %></h4></b></td>
+        <td><%= link_to 'Удалить', setting, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to "Редактировать", "#my-modal", "data-toggle" => "modal", "data-target" => ".bs-example-modal-sm-#{ setting.id }" %></td>
+        </tr>
+
+        <div class="modal fade bs-example-modal-sm-<%= setting.id %>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  			<div class="modal-dialog modal-lg">
+    			<div class="modal-content">
+      				<div class="modal-header">
+        				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel"></h4>
+        			</div>
+      				<div class="modal-body">
+        				<%= render 'form', setting: setting %>
+      				</div>
+  				</div>
+			</div>
+		</div>
+    
+    
+    <% end %>
+</tbody>
+</table><br>
+<button class="btn btn-primary btn-block btn-lg" type="button" data-toggle="modal" data-target=".bs-example-modal-sm">Добавить раздел</button>
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel"></h4></div>
+      <div class="modal-body">
+        <%= render 'form', setting: @setting %>
+      </div>
+  </div>
+</div>
+</div>
+
+</div>
+<div class="col-md-8">
+<h3>Главная страница</h3>
+<% if @homepage != nil %>
+<%= @homepage.homepage.html_safe %><br>
+
+
+
+<button class="btn btn-primary btn-block btn-lg" type="button" data-toggle="modal" data-target=".bs-modal-lg">Редактировать главную страницу</button>
+
+<div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  			<div class="modal-dialog modal-lg">
+    			<div class="modal-content">
+      				<div class="modal-header">
+        				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel"></h4>
+        			</div>
+      				<div class="modal-body">
+        				<%= render 'form_homepage', setting: @homepage %>
+      				</div>
+  				</div>
+			</div>
+</div>
+<%= link_to 'Очистить', @homepage, method: :delete, data: { confirm: 'Вы уверены?' } %>
+<% else %>
+<button class="btn btn-primary btn-block btn-lg" type="button" data-toggle="modal" data-target=".bs-modal-lg">Создать главную страницу</button>
+
+<div class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  			<div class="modal-dialog modal-lg">
+    			<div class="modal-content">
+      				<div class="modal-header">
+        				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel"></h4>
+        			</div>
+      				<div class="modal-body">
+        				<%= render 'form_homepage', setting: @setting %>
+      				</div>
+  				</div>
+			</div>
+</div>
+<% end %>
+</div>
+</div>

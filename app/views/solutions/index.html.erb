@@ -1,0 +1,77 @@
+<div class="container">
+<div class="row">
+<div class="col-md-8">
+<h1>Solutions</h1>
+
+    <% @solutions.each do |solution| %>
+<article>
+    <h2><%= link_to "#{solution.title}", solution %></h2>
+ 
+    <div class="row">
+        <div class="group1 col-sm-6 col-md-6">
+            <span class="glyphicon glyphicon-folder-open"></span>  <a href="#"><%=  @settings.where(id: solution.section).first.section %></a>
+                     <span class="glyphicon glyphicon-bookmark"></span> <a href="#"><%= solution.tags %></a>,
+                <a href="#"><%= solution.tags %></a>, <a href="#"><%= solution.tags %></a>
+        </div>
+        <div class="group2 col-sm-6 col-md-6">
+                
+                  <span class="glyphicon glyphicon-user"><%= solution.user.name %> <span class="glyphicon glyphicon-time"></span><%= solution.created_at.strftime("%Y-%m-%d") %>
+        </div>
+    </div>
+    <%= solution.body.html_safe %>
+    <% if user_signed_in? %>
+          <% if current_user.admin? %>
+            <br>
+    <%= link_to 'Edit', edit_solution_path(solution) %>|<%= link_to 'Destroy', solution, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <% end %>
+        <% end %>
+</article>
+<% end %>
+<% if user_signed_in? %>
+          <% if current_user.admin? %>
+            <%= link_to 'New Solution', new_solution_path %>
+        <% end %>
+        <% end %>
+
+</div>
+<div class="col-md-4">
+            <!-- Subscribe to my feed widget -->
+    <div class="well text-center">
+        <p class="lead">
+            Don't want to miss updates? Please click the below button!
+        </p>
+        <button class="btn btn-primary btn-lg">Subscribe to my feed</button>
+    </div>
+    <div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Latest Posts</h4>
+    </div>
+    <ul class="list-group">
+    <% @latest.each do |latest|%>
+        <li class="list-group-item"><%= link_to "#{latest.title}", latest %></li>
+        
+        <% end %>
+    </ul>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Tags</h4>
+    </div>
+    <div class="panel-body">
+        <ul class="list-inline">
+            <li><a href="#">Aries</a></li>
+            <li><a href="#">Fire</a></li>
+            <li><a href="#">Mars</a></li>
+            <li><a href="#">Taurus</a></li>
+            <li><a href="#">Earth</a></li>
+            <li><a href="#">Moon</a></li>
+            <li><a href="#">Gemini</a></li>
+            <li><a href="#">Air</a></li>
+            <li><a href="#">Mercury</a></li>
+            <li><a href="#">Cancer</a></li>
+        </ul>
+    </div>
+</div>
+        </div>
+</div>
+</div>

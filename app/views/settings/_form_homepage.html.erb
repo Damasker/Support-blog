@@ -1,0 +1,13 @@
+<%= form_with(model: setting, local: true) do |form| %>
+  
+
+  <div class="form-group">
+
+    <%= form.text_area :homepage, class: 'form-control wysihtml5', size: '40' %>
+    <%= form.hidden_field :setting_name, value: 'homepage' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.submit "Добавить", class: "btn btn-primary btn-block btn-lg" %>
+  </div>
+<% end %>
